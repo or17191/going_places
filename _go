@@ -1,0 +1,8 @@
+#compdef go
+
+local dscr
+
+dscr=($(sort $FAVPATH))
+
+_describe 'favorites' dscr
+
