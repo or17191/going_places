@@ -6,8 +6,16 @@ function go(){
 	local a=`grep "^$1:" $FAVPATH`
 	if [ $a ]; then
 		a=("${(s/:/)a}")
-		cd $a[2]
-		return 0
+		local dst=$a[2]
+        if [ $2 ]; then
+            dst="${dst}/$2"
+        fi
+        if [ -d $dst ]; then
+            cd $dst
+            return 0
+        else
+            return 1
+        fi
 	else
 		return 1
 	fi
@@ -26,7 +34,9 @@ function favadd(){
 }
 
 function favrm(){
-	sed -i -r "/^$1:/d" $FAVPATH
+	local args=$(for i do echo -n "|$i"; done)
+	args=$args[2,-1]
+	sed -i -r "/^$args:/d" $FAVPATH
 }
 
 function favbu(){
@@ -42,3 +52,4 @@ function favrestore(){
 }
 
 alias favlist='sort $FAVPATH | sed "s/:/:-- /g" | column -t -s :'
+
