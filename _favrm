@@ -1,0 +1,8 @@
+#compdef favrm
+
+local files
+
+files=$(sort $FAVPATH | sed "s/:.*$//")
+
+_arguments "*:favorites:($files)"
+
