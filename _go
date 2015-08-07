@@ -1,8 +1,21 @@
 #compdef go
 
-local dscr
-
-dscr=($(sort $FAVPATH))
-
-_describe 'favorites' dscr
+_go(){
+    local dscr
+    dscr=($(sort $FAVPATH))
+    _arguments '1:location:{_describe "favorites" dscr}' '2:filename:->subdir'
+    case "$state" in
+        subdir)
+            local paths loc expl
+            loc="$(_get_favloc $line[1])"
+            if [ -z "$loc" ]; then
+                return 1
+            fi
+            _directories -W "$loc"
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
 
