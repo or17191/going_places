@@ -2,16 +2,16 @@
 
 FAVPATH=~/.favorites
 
-function go(){
+function _get_favloc(){
 	local a=`grep "^$1:" $FAVPATH`
 	if [ $a ]; then
 		a=("${(s/:/)a}")
-		local dst=$a[2]
+		local dst="$a[2]"
         if [ $2 ]; then
             dst="${dst}/$2"
         fi
         if [ -d $dst ]; then
-            cd $dst
+            echo "$dst"
             return 0
         else
             return 1
@@ -19,6 +19,16 @@ function go(){
 	else
 		return 1
 	fi
+}
+
+function go(){
+    local loc="$(_get_favloc $@)"
+    if [ $loc ]; then
+        cd "$loc"
+        return 0
+    else
+        return 1
+    fi
 }
 
 function favadd(){
