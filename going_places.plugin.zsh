@@ -21,7 +21,7 @@ function _get_favloc(){
 	fi
 }
 
-function go(){
+function goto(){
     local loc="$(_get_favloc $@)"
     if [ $loc ]; then
         cd "$loc"

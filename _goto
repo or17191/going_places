@@ -1,6 +1,6 @@
-#compdef go
+#compdef goto
 
-_go(){
+_goto(){
     local dscr
     dscr=($(sort $FAVPATH))
     _arguments '1:location:{_describe "favorites" dscr}' '2:filename:->subdir'
